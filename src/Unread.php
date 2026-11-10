@@ -43,6 +43,10 @@ class Unread
                 $query->whereNull('discussion_user.last_read_post_number')
                     ->orWhereColumn('discussion_user.last_read_post_number', '<', 'discussions.last_post_number');
             })
+            // Same rule as Flarum's `is:unread` filter: "mark all as read" hides older discussions
+            ->when($actor->marked_all_as_read_at, function ($query) use ($actor) {
+                $query->where('discussions.last_posted_at', '>', $actor->marked_all_as_read_at);
+            })
             ->distinct()
             ->pluck('discussion_tag.tag_id')
             ->map(fn ($id) => (int) $id)
