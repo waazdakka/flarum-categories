@@ -1,0 +1,13 @@
+fof-categories:
+  admin:
+    labels:
+      unread_enabled: Activer l'indicateur de non-lus
+      unread_icon_glow: Faire briller l'icône quand il y a des non-lus
+      unread_title_color: Colorer le titre de la catégorie quand il y a des non-lus
+      unread_dot: Afficher un point quand il y a des non-lus
+      unread_color: Couleur de l'indicateur
+      unread_badge: Afficher un badge quand il y a des non-lus
+      unread_badge_text: Texte du badge
+      unread_badge_color: Couleur du badge
+    headings:
+      unread: Indicateur de non-lus

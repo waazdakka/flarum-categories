@@ -75,12 +75,18 @@ export default class Category extends Component<Attrs> {
 
     this.compactMobileMode = !!app.forum.attribute('categories.compactMobile');
 
+    const tagHasUnread = !!(app.session.user && app.forum.attribute('categories.unreadEnabled') && tag.attribute('hasUnread'));
+
     return (
       <li
         className={classList('TagCategory', `TagCategory-${tag.slug()}`, {
           SubCategory: this.isChild,
           ParentCategory: !this.isChild,
           compactMobile: this.compactMobileMode,
+          'hasUnread-iconGlow': tagHasUnread && !!app.forum.attribute('categories.unreadIconGlow'),
+          'hasUnread-titleColor': tagHasUnread && !!app.forum.attribute('categories.unreadTitleColor'),
+          'hasUnread-dot': tagHasUnread && !!app.forum.attribute('categories.unreadDot'),
+          'hasUnread-badge': tagHasUnread && !!app.forum.attribute('categories.unreadBadge'),
         })}
       >
         {this.categoryItems().toArray()}
@@ -249,7 +255,9 @@ export default class Category extends Component<Attrs> {
   mainItems() {
     const items = new ItemList();
 
-    items.add('name', <h4 className="TagCategory-name">{this.tag.name()}</h4>, 15);
+    items.add('name', <h4 className="TagCategory-name" data-badge-text={app.forum.attribute('categories.unreadBadgeText') || 'new'}>
+        {this.tag.name()}
+      </h4>, 15);
 
     if (this.tag.description() && (this.isChild || !app.forum.attribute('categories.parentRemoveDescription'))) {
       items.add('description', <div className="TagCategory-description">{this.tag.description()}</div>, 10);

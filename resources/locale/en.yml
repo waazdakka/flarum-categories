@@ -12,6 +12,14 @@ fof-categories:
       parent_remove_stats: Hide stats for top-level tags
       parent_remove_last_discussion: Hide most recent discussions for top-level tags
       small_forum_optimized: Optimize for small forums
+      unread_enabled: Enable unread indicator
+      unread_icon_glow: Glow icon when unread
+      unread_title_color: Colorize category title when unread
+      unread_dot: Show dot indicator when unread
+      unread_color: Unread indicator color
+      unread_badge: Show badge when unread
+      unread_badge_text: Badge text
+      unread_badge_color: Badge color
     help:
       child_bare_icon: When enabled, icons on child categories will be displayed without a circular background.
       full_page_desktop: The sidebar nav menu will be collapsed to a row (like on the traditional tags page). This will also hide widgets (such as Friends of Flarum Forum Statistics) from the categories page navbar.
@@ -22,6 +30,7 @@ fof-categories:
       parent_display: Parent Category Display
       child_display: Child Category Display
       performance: Performance
+      unread: Unread Indicator
     title: Categories Settings
 
   forum:

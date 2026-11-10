@@ -18,7 +18,9 @@ use Flarum\Api\Schema;
 use Flarum\Extend;
 use Flarum\Settings\SettingsRepositoryInterface;
 use Flarum\Tags\Api\Resource\TagResource;
+use Flarum\Tags\Tag;
 use FoF\Categories\Content\Categories;
+use FoF\Categories\Unread;
 
 return [
     (new Extend\Frontend('forum'))
@@ -33,6 +35,9 @@ return [
 
     (new Extend\Settings())
         ->default('fof-categories.child-bare-icon', true)
+        ->default('fof-categories.unread-color', '#e8a234')
+        ->default('fof-categories.unread-badge-text', 'new')
+        ->default('fof-categories.unread-badge-color', '#ff6000')
         ->serializeToForum('categories.keepTagsNav', 'fof-categories.keep-tags-nav', 'boolval')
         ->serializeToForum('categories.fullPageDesktop', 'fof-categories.full-page-desktop', 'boolval')
         ->serializeToForum('categories.compactMobile', 'fof-categories.compact-mobile', 'boolval')
@@ -40,7 +45,15 @@ return [
         ->serializeToForum('categories.parentRemoveDescription', 'fof-categories.parent-remove-description', 'boolval')
         ->serializeToForum('categories.parentRemoveStats', 'fof-categories.parent-remove-stats', 'boolval')
         ->serializeToForum('categories.parentRemoveLastDiscussion', 'fof-categories.parent-remove-last-discussion', 'boolval')
-        ->serializeToForum('categories.childBareIcon', 'fof-categories.child-bare-icon', 'boolval'),
+        ->serializeToForum('categories.childBareIcon', 'fof-categories.child-bare-icon', 'boolval')
+        ->serializeToForum('categories.unreadEnabled', 'fof-categories.unread-enabled', 'boolval')
+        ->serializeToForum('categories.unreadIconGlow', 'fof-categories.unread-icon-glow', 'boolval')
+        ->serializeToForum('categories.unreadTitleColor', 'fof-categories.unread-title-color', 'boolval')
+        ->serializeToForum('categories.unreadDot', 'fof-categories.unread-dot', 'boolval')
+        ->serializeToForum('categories.unreadBadge', 'fof-categories.unread-badge', 'boolval')
+        ->serializeToForum('categories.unreadBadgeText', 'fof-categories.unread-badge-text', 'strval')
+        ->registerLessConfigVar('fof-categories-unread-color', 'fof-categories.unread-color', fn ($value) => $value ?: '#e8a234')
+        ->registerLessConfigVar('fof-categories-unread-badge-color', 'fof-categories.unread-badge-color', fn ($value) => $value ?: '#ff6000'),
 
     (new Extend\ApiResource(TagResource::class))
             ->fields(fn () => [
@@ -67,6 +80,19 @@ return [
                         }
 
                         return (int) $tag->discussion_count;
+                    }),
+                // Unread indicator: true if the actor has unread discussions in this tag
+                // (or, for a parent tag, in one of its children).
+                Schema\Boolean::make('hasUnread')
+                    ->get(function (Tag $tag, Context $context) {
+                        $actor = $context->getActor();
+
+                        if ($actor->isGuest()
+                            || ! resolve(SettingsRepositoryInterface::class)->get('fof-categories.unread-enabled')) {
+                            return false;
+                        }
+
+                        return in_array($tag->id, Unread::tagIdsFor($actor), true);
                     }),
             ]),
 

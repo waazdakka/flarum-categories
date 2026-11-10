@@ -766,3 +766,37 @@
     }
   }
 }
+
+// Unread indicator styles
+@keyframes fof-category-glow {
+  0%   { filter: drop-shadow(0 0 4px @fof-categories-unread-color); }
+  50%  { filter: drop-shadow(0 0 12px @fof-categories-unread-color); }
+  100% { filter: drop-shadow(0 0 4px @fof-categories-unread-color); }
+}
+
+.TagCategory.hasUnread-iconGlow > a > .TagCategory-alignStart .TagCategory-icon .fa-stack {
+  animation: fof-category-glow 2s ease-in-out infinite;
+}
+
+.TagCategory.hasUnread-titleColor > a > .TagCategory-alignStart .TagCategory-name {
+  color: @fof-categories-unread-color;
+}
+
+.TagCategory.hasUnread-dot > a > .TagCategory-alignStart .TagCategory-name::after {
+  content: '●';
+  margin-left: 6px;
+  color: @fof-categories-unread-color;
+  font-size: 0.5em;
+  vertical-align: middle;
+}
+
+.TagCategory.hasUnread-badge > a > .TagCategory-alignStart .TagCategory-name::after {
+  content: attr(data-badge-text);
+  margin-left: 5px;
+  color: #fff;
+  font-size: 65%;
+  background: @fof-categories-unread-badge-color;
+  border-radius: 4px;
+  padding: 0 4px 2px 4px;
+  vertical-align: text-top;
+}

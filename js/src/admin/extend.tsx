@@ -58,5 +58,71 @@ export default [
       label: app.translator.trans('fof-categories.admin.labels.small_forum_optimized'),
       help: app.translator.trans('fof-categories.admin.help.small_forum_optimized'),
       type: 'switch',
-    })),
+    }))
+    .setting(() => () => <legend class="categories-legend">{app.translator.trans('fof-categories.admin.headings.unread')}</legend>, -10)
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-enabled',
+        label: app.translator.trans('fof-categories.admin.labels.unread_enabled'),
+        type: 'switch',
+      }),
+      -11
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-icon-glow',
+        label: app.translator.trans('fof-categories.admin.labels.unread_icon_glow'),
+        type: 'switch',
+      }),
+      -12
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-title-color',
+        label: app.translator.trans('fof-categories.admin.labels.unread_title_color'),
+        type: 'switch',
+      }),
+      -13
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-dot',
+        label: app.translator.trans('fof-categories.admin.labels.unread_dot'),
+        type: 'switch',
+      }),
+      -14
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-color',
+        label: app.translator.trans('fof-categories.admin.labels.unread_color'),
+        type: 'color-preview',
+      }),
+      -15
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-badge',
+        label: app.translator.trans('fof-categories.admin.labels.unread_badge'),
+        type: 'switch',
+      }),
+      -16
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-badge-text',
+        label: app.translator.trans('fof-categories.admin.labels.unread_badge_text'),
+        type: 'text',
+      placeholder: 'new',
+      }),
+      -17
+    )
+    .setting(
+      () => ({
+        setting: 'fof-categories.unread-badge-color',
+        label: app.translator.trans('fof-categories.admin.labels.unread_badge_color'),
+        type: 'color-preview',
+      }),
+      -18
+    ),
 ] satisfies object[];
